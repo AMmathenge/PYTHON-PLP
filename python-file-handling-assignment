@@ -1,0 +1,116 @@
+"""
+File Handling and Exception Handling Assignment
+Author: [Your Name]
+Date: [Today's Date]
+"""
+
+# ======================
+# TASK 1: Basic File Writing
+# ======================
+def task1_write_hello_world():
+    """Create a file and write 'Hello, World!' to it"""
+    try:
+        with open("output.txt", "w") as file:
+            file.write("Hello, World!")
+        print("Task 1: Successfully wrote to output.txt")
+    except IOError as e:
+        print(f"Task 1 Error: {str(e)}")
+
+# ======================
+# TASK 2: Reading a File Safely
+# ======================
+def task2_read_file_safely():
+    """Read a file with proper error handling"""
+    try:
+        with open("output.txt", "r") as file:
+            content = file.read()
+            print("Task 2 - File content:")
+            print(content)
+    except FileNotFoundError:
+        print("Task 2: File not found. Please check the filename.")
+    except IOError as e:
+        print(f"Task 2 Error: {str(e)}")
+
+# ======================
+# TASK 3: Appending to a File
+# ======================
+def task3_append_to_file():
+    """Append additional lines to the file"""
+    try:
+        with open("output.txt", "a") as file:
+            file.write("\nLine 1: Python is fun!")
+            file.write("\nLine 2: Working with files is easy.")
+        print("Task 3: Successfully appended to output.txt")
+    except IOError as e:
+        print(f"Task 3 Error: {str(e)}")
+
+# ======================
+# TASK 4: Handling Multiple Exceptions
+# ======================
+def task4_read_integer_from_file():
+    """Read an integer from file with multiple exception handling"""
+    try:
+        with open("numbers.txt", "r") as file:
+            try:
+                number = int(file.read())
+                print(f"Task 4: The number is {number}")
+            except ValueError:
+                print("Task 4: Invalid data in file.")
+    except FileNotFoundError:
+        print("Task 4: File not found.")
+
+# ======================
+# CHALLENGE 1: File Read & Write
+# ======================
+def challenge1_transform_file():
+    """Read a file, transform content, and write to new file"""
+    try:
+        with open("input.txt", "r") as infile:
+            content = infile.read().upper()  # Convert to uppercase
+            
+        with open("output_challenge.txt", "w") as outfile:
+            outfile.write(content)
+            
+        print("Challenge 1: File transformed successfully")
+    except FileNotFoundError:
+        print("Challenge 1 Error: input.txt not found")
+    except IOError as e:
+        print(f"Challenge 1 Error: {str(e)}")
+
+# ======================
+# CHALLENGE 2: Error Handling Lab
+# ======================
+def challenge2_user_file_handling():
+    """Let user specify file and handle errors gracefully"""
+    filename = input("Enter filename to read: ")
+    try:
+        with open(filename, "r") as file:
+            print("\nFile content:")
+            print(file.read())
+    except FileNotFoundError:
+        print("Error: File not found.")
+    except PermissionError:
+        print("Error: Permission denied.")
+    except IOError as e:
+        print(f"Error: {str(e)}")
+
+# ======================
+# MAIN PROGRAM
+# ======================
+def main():
+    print("\n=== File Handling Assignment ===\n")
+    
+    # Execute tasks
+    task1_write_hello_world()
+    task2_read_file_safely()
+    task3_append_to_file()
+    task2_read_file_safely()  # Read again to show appended content
+    task4_read_integer_from_file()
+    
+    # Execute challenges
+    print("\n=== Challenges ===")
+    challenge1_transform_file()
+    challenge2_user_file_handling()
+
+if __name__ == "__main__":
+    main()
