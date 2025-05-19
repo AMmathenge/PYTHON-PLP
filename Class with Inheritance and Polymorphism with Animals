@@ -1,0 +1,86 @@
+class Smartphone:
+    """Base class representing a smartphone"""
+    
+    def __init__(self, brand, model, storage_gb):
+        self.brand = brand
+        self.model = model
+        self.storage = storage_gb
+        self.__battery_level = 100  # Encapsulated attribute
+        
+    def display_info(self):
+        """Public method to show device info"""
+        print(f"{self.brand} {self.model} | Storage: {self.storage}GB")
+    
+    def check_battery(self):
+        """Encapsulated battery access"""
+        print(f"Battery: {self.__battery_level}%")
+    
+    def drain_battery(self, percent):
+        """Protected method for battery management"""
+        if 0 <= percent <= 100:
+            self.__battery_level = max(0, self.__battery_level - percent)
+        return self.__battery_level
+
+class FoldablePhone(Smartphone):
+    """Child class with special features"""
+    
+    def __init__(self, brand, model, storage_gb, unfolded_size):
+        super().__init__(brand, model, storage_gb)
+        self.unfolded_size = unfolded_size
+        self.__is_folded = True  # Encapsulated state
+    
+    def toggle_fold(self):
+        """Unique to foldable phones"""
+        self.__is_folded = not self.__is_folded
+        status = "unfolded" if not self.__is_folded else "folded"
+        print(f"Phone is now {status}")
+    
+    def display_info(self):  # Method overriding
+        """Polymorphic display method"""
+        print(f"📱 {self.brand} {self.model} | "
+              f"Storage: {self.storage}GB | "
+              f"Screen: {self.unfolded_size}\"")
+
+# Usage
+my_phone = Smartphone("Apple", "iPhone 15", 256)
+my_phone.display_info()
+my_phone.check_battery()
+
+foldable = FoldablePhone("Samsung", "Z Fold", 512, 7.6)
+foldable.display_info()  # Uses overridden method
+foldable.toggle_fold()
+
+class Animal:
+    """Base class demonstrating polymorphism"""
+    
+    def __init__(self, name):
+        self.name = name
+    
+    def move(self):
+        """To be overridden by subclasses"""
+        raise NotImplementedError("Subclasses must implement move()")
+
+class Fish(Animal):
+    def move(self):
+        print(f"{self.name} is swimming! 🐟")
+
+class Bird(Animal):
+    def move(self):
+        print(f"{self.name} is flying! 🦅")
+
+class Snake(Animal):
+    def move(self):
+        print(f"{self.name} is slithering! 🐍")
+
+# Polymorphic function
+def animal_race(animals):
+    print("\n🏁 Racing Animals!")
+    for animal in animals:
+        animal.move()
+
+# Usage
+nemo = Fish("Nemo")
+tweety = Bird("Tweety")
+kaa = Snake("Kaa")
+
+animal_race([nemo, tweety, kaa])
